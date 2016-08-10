@@ -106,5 +106,5 @@
         </resources>
 	</build>
 	<groupId>fr.charbo</groupId>
-	<version>0.1-snapshot</version>
+	<version>0.2-snapshot</version>
 </project>

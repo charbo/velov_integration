@@ -64,6 +64,9 @@ public class StationDTO implements Serializable {
 	@Column(name="MILLI_FROM_MINUIT")
 	private long milliFromMinuit;
 	
+	@Column(name="INTERVALLE")
+	private Integer intervalle;
+	
 
 	public String getName() {
 		return name;
@@ -176,6 +179,16 @@ public class StationDTO implements Serializable {
 	public void setMilliFromMinuit(long milliFromMinuit) {
 		this.milliFromMinuit = milliFromMinuit;
 	}
+	
+	
+
+	public Integer getIntervalle() {
+		return intervalle;
+	}
+
+	public void setIntervalle(Integer intervalle) {
+		this.intervalle = intervalle;
+	}
 
 	@Override
 	public int hashCode() {
@@ -192,10 +205,6 @@ public class StationDTO implements Serializable {
 	        return false;
 	    StationDTO other = (StationDTO) obj;
 	    return stationKey.equals(other.stationKey);
-	}
-
-
-
-	
+	}	
 	
 }

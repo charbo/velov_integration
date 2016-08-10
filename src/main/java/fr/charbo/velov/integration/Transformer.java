@@ -35,6 +35,7 @@ public class Transformer implements GenericTransformer<Station, StationDTO>{
 		
 		result.setFull(station.getDisponibles() == 0 ? 1 : 0);
 		
+		result.setIntervalle(calendar.get(Calendar.MINUTE) / 5 + calendar.get(Calendar.HOUR_OF_DAY)*12);
 				
 		return result;
 	}
