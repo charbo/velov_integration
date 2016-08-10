@@ -35,14 +35,7 @@ public class Transformer implements GenericTransformer<Station, StationDTO>{
 		
 		result.setFull(station.getDisponibles() == 0 ? 1 : 0);
 		
-		
-		Calendar minuit = Calendar.getInstance();
-		minuit.set(Calendar.HOUR_OF_DAY, 0);
-		minuit.set(Calendar.MINUTE, 0);
-		minuit.set(Calendar.SECOND, 0);
-		
-		result.setMilliFromMinuit(calendar.getTimeInMillis() - minuit.getTimeInMillis());
-		
+				
 		return result;
 	}
 	
