@@ -143,3 +143,4 @@ target/classes/fr/charbo/velov/integration/Transformer.class
 target/classes/integration.xml
 target/classes/META-INF/persistence.xml
 velov-integration.iml
+/target/

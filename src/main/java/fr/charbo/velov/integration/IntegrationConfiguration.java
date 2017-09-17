@@ -2,6 +2,7 @@ package fr.charbo.velov.integration;
 
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.*;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
 @PropertySources({
@@ -10,6 +11,7 @@ import org.springframework.context.annotation.*;
 })
 @ComponentScan
 @EnableAutoConfiguration
+@EnableTransactionManagement
 @ImportResource("classpath:/integration.xml")
 public class IntegrationConfiguration {
 }

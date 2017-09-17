@@ -13,7 +13,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 @Entity
 @Table(name="STATION")
-public class StationDTO implements Serializable {
+public class StationDAO implements Serializable {
 	
 	/**
 	 * 
@@ -56,13 +56,32 @@ public class StationDTO implements Serializable {
 	
 	@Column(name="FULL")
 	private int full;
+	
+	@Column(name="EMPTY")
+	private int empty;
 
 	@Column(name="NUMERO_JOUR")
 	//Numéro du jour de la semaine (1 == dimanche)
 	private int numeroJour;
 	
-	@Column(name="MILLI_FROM_MINUIT")
-	private long milliFromMinuit;
+	@Column(name="VELOV_IN")
+	private int velovIn;
+	
+	@Column(name="VELOV_OUT")
+	private int velovOut;
+	
+	@Column(name="TEMPS_VIDE")
+	private long tempsVide;
+	
+	@Column(name="TEMPS_PLEINE")
+	private long tempsPleine;
+	
+	@Column(name="INTERVALLE")
+	private int intervalle;
+	
+	@Column(name="INTERVALLE15")
+	private int intervalle15;
+	
 	
 
 	public String getName() {
@@ -161,6 +180,14 @@ public class StationDTO implements Serializable {
 		this.full = full;
 	}
 	
+	public int getEmpty() {
+		return empty;
+	}
+
+	public void setEmpty(int empty) {
+		this.empty = empty;
+	}
+
 	public void setNumeroJour(int numeroJour) {
 		this.numeroJour = numeroJour;
 	}
@@ -169,12 +196,53 @@ public class StationDTO implements Serializable {
 		return numeroJour;
 	}
 	
-	public long getMilliFromMinuit() {
-		return milliFromMinuit;
+	
+	public int getVelovIn() {
+		return velovIn;
 	}
 
-	public void setMilliFromMinuit(long milliFromMinuit) {
-		this.milliFromMinuit = milliFromMinuit;
+	public void setVelovIn(int velovIn) {
+		this.velovIn = velovIn;
+	}
+
+	public int getVelovOut() {
+		return velovOut;
+	}
+
+	public void setVelovOut(int velovOut) {
+		this.velovOut = velovOut;
+	}
+
+	public long getTempsVide() {
+		return tempsVide;
+	}
+
+	public void setTempsVide(long tempsVide) {
+		this.tempsVide = tempsVide;
+	}
+
+	public long getTempsPleine() {
+		return tempsPleine;
+	}
+
+	public void setTempsPleine(long tempsPleine) {
+		this.tempsPleine = tempsPleine;
+	}
+
+	public int getIntervalle() {
+		return intervalle;
+	}
+
+	public void setIntervalle(int intervalle) {
+		this.intervalle = intervalle;
+	}
+
+	public int getIntervalle15() {
+		return intervalle15;
+	}
+
+	public void setIntervalle15(int intervalle15) {
+		this.intervalle15 = intervalle15;
 	}
 
 	@Override
@@ -190,8 +258,15 @@ public class StationDTO implements Serializable {
 	        return false;
 	    if (getClass() != obj.getClass())
 	        return false;
-	    StationDTO other = (StationDTO) obj;
+	    StationDAO other = (StationDAO) obj;
 	    return stationKey.equals(other.stationKey);
+	}
+
+	@Override
+	public String toString() {
+		return "StationDAO [stationKey=" + stationKey + ", name=" + name
+				+ ", disponibles=" + disponibles + ", occupees=" + occupees
+				+ ", velovIn=" + velovIn + ", velovOut=" + velovOut + "]";
 	}
 
 

@@ -103,4 +103,13 @@ public class Station {
 		this.updateTime = updateTime;
 	}
 
+	@Override
+	public String toString() {
+		return "Station [idStation=" + idStation + ", status=" + status
+				+ ", name=" + name + ", bikeStands=" + bikeStands
+				+ ", disponibles=" + disponibles + ", occupees=" + occupees
+				+ ", updateTime=" + updateTime + "]";
+	}
+	
+
 }

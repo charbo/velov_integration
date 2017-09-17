@@ -1,11 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:int="http://www.springframework.org/schema/integration"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:int="http://www.springframework.org/schema/integration"
 	xmlns:int-http="http://www.springframework.org/schema/integration/http"
 	xmlns:repository="http://www.springframework.org/schema/data/repository"
-	xmlns:tx="http://www.springframework.org/schema/tx"
-	xmlns:int-jpa="http://www.springframework.org/schema/integration/jpa"
+	xmlns:tx="http://www.springframework.org/schema/tx" xmlns:int-jpa="http://www.springframework.org/schema/integration/jpa"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
 		http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa-1.3.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
@@ -13,89 +11,93 @@
 		http://www.springframework.org/schema/integration/http http://www.springframework.org/schema/integration/http/spring-integration-http-4.1.xsd
 		http://www.springframework.org/schema/data/repository http://www.springframework.org/schema/data/repository/spring-repository-1.7.xsd
 		http://www.springframework.org/schema/integration http://www.springframework.org/schema/integration/spring-integration-4.1.xsd">
-		
-    <int:inbound-channel-adapter channel="out" expression="''">
-        <int:poller fixed-delay="60000"></int:poller>
-    </int:inbound-channel-adapter>
-    
+
+	<int:inbound-channel-adapter channel="out"
+		expression="''">
+		<int:poller fixed-delay="60000"></int:poller>
+	</int:inbound-channel-adapter>
+
 	<int:channel id="out"></int:channel>
-    
-    <int-http:outbound-gateway id="quakerHttpGateway"
-                               request-channel="out"
-                               url="https://api.jcdecaux.com/vls/v1/stations?contract=Lyon&amp;apiKey=681e47e9ba5d7f9316f815d7d262382d92cea6c4"
-                               http-method="GET"
-                               encode-uri="false"
-                               expected-response-type="java.lang.String"
-                               charset="UTF-8"
-                               reply-timeout="5000"
-                               reply-channel="out2"
-                               >
-    </int-http:outbound-gateway>
-    
-    <int:channel id="out2">
-    	<int:queue capacity="10" />
-    </int:channel>
-    
-    <int:json-to-object-transformer input-channel="out2"  type="fr.charbo.velov.integration.Station[]" output-channel="splitter.channel">
-    	<int:poller fixed-rate="10"></int:poller>
-    </int:json-to-object-transformer>
-    
-        
-    <int:channel id="splitter.channel">
-    	<int:queue capacity="10" />
-    </int:channel>
 
-    <int:splitter id="splitter" ref="splitterBean" input-channel="splitter.channel" output-channel="out3">
-    	<int:poller fixed-rate="10"></int:poller>
-    </int:splitter>
-    
-    
-    <int:channel id="out3">
-    	<int:queue capacity="10" />
-    </int:channel>
-    
-    <int:transformer input-channel="out3" output-channel="channel.activator" ref="transformer">
-    	<int:poller receive-timeout="30000" fixed-rate="10"/>
-    </int:transformer>
-    
-    <int:channel id="channel.activator">
-    	<int:queue capacity="10" />
-    </int:channel>
-    
+	<int-http:outbound-gateway id="quakerHttpGateway"
+		request-channel="out"
+		url="https://api.jcdecaux.com/vls/v1/stations?contract=Lyon&amp;apiKey=681e47e9ba5d7f9316f815d7d262382d92cea6c4"
+		http-method="GET" encode-uri="false" expected-response-type="java.lang.String"
+		charset="UTF-8" reply-timeout="5000" reply-channel="out2">
+	</int-http:outbound-gateway>
 
-<bean class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean" id="entityManagerFactory">
-  <property name="packagesToScan" value="fr.charbo.velov.integration" />
-  <property name="dataSource" ref="dataSource" />
-  <property name="jpaVendorAdapter">
-   <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-    <property name="generateDdl" value="true">
-   </property></bean>
-  </property>
- </bean>
-  
- 
+	<int:channel id="out2">
+		<int:queue capacity="10" />
+	</int:channel>
 
-<bean name="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-    <property name="driverClassName" value="com.mysql.jdbc.Driver" />
-    <property name="url" value="jdbc:mysql://localhost:3306/test" />
-    <property name="username" value="root" />
-    <property name="password" value="root" />
-</bean>
+	<int:json-to-object-transformer
+		input-channel="out2" type="fr.charbo.velov.integration.Station[]"
+		output-channel="splitter.channel">
+		<int:poller fixed-rate="10"></int:poller>
+	</int:json-to-object-transformer>
+
+
+	<int:channel id="splitter.channel">
+		<int:queue capacity="10" />
+	</int:channel>
+
+	<int:splitter id="splitter" ref="splitterBean"
+		input-channel="splitter.channel" output-channel="out3">
+		<int:poller fixed-rate="10"></int:poller>
+	</int:splitter>
+
+
+	<int:channel id="out3">
+		<int:queue capacity="10" />
+	</int:channel>
+
+	<int:transformer input-channel="out3" output-channel="channel.activator"
+		ref="transformer">
+		<int:poller receive-timeout="30000" fixed-rate="10" />
+	</int:transformer>
+
+	<int:channel id="channel.activator">
+		<int:queue capacity="10" />
+	</int:channel>
+
+
+	<bean
+		class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
+		id="entityManagerFactory">
+		<property name="packagesToScan" value="fr.charbo.velov.integration" />
+		<property name="dataSource" ref="dataSource" />
+		<property name="jpaVendorAdapter">
+			<bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+				<property name="generateDdl" value="true">
+				</property>
+			</bean>
+		</property>
+	</bean>
 
 
 
-       <!-- Define the JPA transaction manager -->
+	<bean name="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/velov" />
+		<property name="username" value="root" />
+		<property name="password" value="root" />
+	</bean>
+
+
+
+	<!-- Define the JPA transaction manager -->
 	<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
 		<constructor-arg ref="entityManagerFactory" />
 	</bean>
+
+	<int-jpa:outbound-channel-adapter
+		channel="channel.activator" entity-class="fr.charbo.velov.integration.StationDAO"
+		entity-manager-factory="entityManagerFactory" persist-mode="MERGE">
+		<int:poller receive-timeout="30000" fixed-rate="10" />
+		<int-jpa:transactional transaction-manager="transactionManager" />
+	</int-jpa:outbound-channel-adapter>
 	
-   <int-jpa:outbound-channel-adapter channel="channel.activator" 
-   	entity-class="fr.charbo.velov.integration.StationDTO"  entity-manager-factory="entityManagerFactory" persist-mode="MERGE">
-   		<int:poller receive-timeout="30000" fixed-rate="10"/>
-   		<int-jpa:transactional transaction-manager="transactionManager"/>
-   </int-jpa:outbound-channel-adapter>
-   
-   
 </beans>
 
 
