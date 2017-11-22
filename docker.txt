@@ -1,0 +1,8 @@
+docker run --name velovdb -e MYSQL_ROOT_PASSWORD=root -d hypriot/rpi-mysql
+docker run -it -p 8080:8080 --name inte --link velovdb velov/integration
+docker build . < Dockerfile
+docker exec -i -t inte bash
+
+docker start velovdb
+
+docker exec -it velovdb mysql -uroot -p
