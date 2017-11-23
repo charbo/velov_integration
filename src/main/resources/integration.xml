@@ -79,7 +79,8 @@
 	<bean name="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
-		<property name="url" value="jdbc:mysql://172.17.0.2:3306/velov" />
+		<!--<property name="url" value="jdbc:mysql://172.17.0.2:3306/velov" />-->
+		<property name="url" value="jdbc:mysql://localhost:3306/velov" />
 		<property name="username" value="root" />
 		<property name="password" value="root" />
 	</bean>
@@ -92,7 +93,7 @@
 	</bean>
 
 	<int-jpa:outbound-channel-adapter
-		channel="channel.activator" entity-class="fr.charbo.velov.integration.StationDAO"
+		channel="channel.activator" entity-class="fr.charbo.velov.integration.StationEntity"
 		entity-manager-factory="entityManagerFactory" persist-mode="MERGE">
 		<int:poller receive-timeout="30000" fixed-rate="10" />
 		<int-jpa:transactional transaction-manager="transactionManager" />

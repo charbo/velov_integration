@@ -3,12 +3,15 @@ package fr.charbo.velov.integration;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.integration.transformer.GenericTransformer;
 import org.springframework.stereotype.Service;
 
 @Service("transformer")
-public class Transformer implements GenericTransformer<Station, StationDAO> {
+public class Transformer implements GenericTransformer<Station, StationEntity> {
+	private static final Logger LOG = LoggerFactory.getLogger(Transformer.class);
 
 	private StationRepository stationRepository;
 
@@ -17,11 +20,12 @@ public class Transformer implements GenericTransformer<Station, StationDAO> {
 		this.stationRepository = stationRepository;
 	}
 
-	public StationDAO transform(Station station) {
-		StationDAO previous = stationRepository
-				.findMaxDateByStationKeyIdStation(station.getIdStation());
+	public StationEntity transform(Station station) {
+		LOG.debug("===================================");
+		StationEntity previous = stationRepository.findMaxDateByStationKeyIdStation(station.getIdStation());
+		LOG.debug("previous {}", previous);
 
-		StationDAO result = new StationDAO();
+		StationEntity result = new StationEntity();
 		StationKey key = new StationKey();
 		key.setId(station.getUpdateTime());
 		key.setIdStation(station.getIdStation());

@@ -13,7 +13,7 @@ import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 @Entity
 @Table(name="station")
-public class StationDAO implements Serializable {
+public class StationEntity implements Serializable {
 	
 	/**
 	 * 
@@ -258,13 +258,13 @@ public class StationDAO implements Serializable {
 	        return false;
 	    if (getClass() != obj.getClass())
 	        return false;
-	    StationDAO other = (StationDAO) obj;
+	    StationEntity other = (StationEntity) obj;
 	    return stationKey.equals(other.stationKey);
 	}
 
 	@Override
 	public String toString() {
-		return "StationDAO [stationKey=" + stationKey + ", name=" + name
+		return "StationEntity [stationKey=" + stationKey + ", name=" + name
 				+ ", disponibles=" + disponibles + ", occupees=" + occupees
 				+ ", velovIn=" + velovIn + ", velovOut=" + velovOut + "]";
 	}
