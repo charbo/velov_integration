@@ -1,4 +1,10 @@
 .classpath
+.idea/*
+.idea/.name
+.idea/encodings.xml
+.idea/misc.xml
+.idea/uiDesigner.xml
+.idea/workspace.xml
 .metadata/.lock
 .metadata/.log
 .metadata/.mylyn/repositories.xml.zip
